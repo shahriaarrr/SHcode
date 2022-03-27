@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QFont
 from PyQt5 import uic
 
 class SHcode(QMainWindow):
@@ -8,6 +9,14 @@ class SHcode(QMainWindow):
         self.show()
 
         self.setWindowTitle("SHcode")
+
+        #change font size
+        self.action12pt.triggered.connect(lambda: self.change_size(12))
+        self.action18pt.triggered.connect(lambda: self.change_size(18))
+        self.action24pt.triggered.connect(lambda: self.change_size(24))
+
+    def change_size(self, size):
+        self.plainTextEdit.setFont(QFont("Arial", size))
 
 def main():
     app = QApplication([])
