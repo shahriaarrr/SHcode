@@ -15,8 +15,24 @@ class SHcode(QMainWindow):
         self.action18pt.triggered.connect(lambda: self.change_size(18))
         self.action24pt.triggered.connect(lambda: self.change_size(24))
 
+        #file action's
+        self.actionopen.triggered.connect(self.open_file)
+
     def change_size(self, size):
         self.plainTextEdit.setFont(QFont("Arial", size))
+
+    def open_file(self):
+        options = QFileDialog.Options()
+        filename, _ = QFileDialog.getOpenFileName(
+            self,
+            "Open File",
+            "",
+            "Text Files (*.txt);;Python Files (*.py);;Yolang Files (*.yo)",
+            options = options
+        )
+        if filename != "":
+            with open(filename, "r") as f:
+                self.plainTextEdit.setPlainText(f.read())
 
 def main():
     app = QApplication([])
