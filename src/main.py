@@ -18,6 +18,7 @@ class SHcode(QMainWindow):
         #file action's
         self.actionopen.triggered.connect(self.open_file)
         self.actionsave.triggered.connect(self.save_file)
+        self.actionclose.triggered.connect(exit)
 
     def change_size(self, size):
         self.plainTextEdit.setFont(QFont("Arial", size))
@@ -47,6 +48,22 @@ class SHcode(QMainWindow):
         if filename != "":
             with open(filename, "w") as f:
                 f.write(self.plainTextEdit.toPlainText())
+
+    def closeEvent(self, event):
+        dialog = QMessageBox()
+        dialog.setText("Do you want to save your file?")
+
+        #add buttons
+        dialog.addButton(QPushButton("yes"), QMessageBox.YesRole) #0
+        dialog.addButton(QPushButton("no"), QMessageBox.NoRole) #1
+        dialog.addButton(QPushButton("cancel"), QMessageBox.RejectRole) #2
+
+        answer = dialog.exec_()
+
+        if answer == 0:
+            self.save_file()
+        elif answer == 2:
+            event.ignore()
 
 def main():
     app = QApplication([])
